@@ -1,37 +1,37 @@
 // src/pages/Dashboard.jsx
-import React, { useState } from 'react'
-import { HiSearch } from 'react-icons/hi'
-import Sidebar from '@/components/common/Sidebar'
-import Topbar from '@/components/common/Topbar'
-import Header from '@/components/common/Header'
-import StatsCard from '@/components/common/StatsCard'
+import React, { useState } from "react";
+import { HiSearch } from "react-icons/hi";
+import Sidebar from "@/components/common/Sidebar";
+import Topbar from "@/components/common/Topbar";
+import Header from "@/components/common/Header";
+import StatsCard from "@/components/common/StatsCard";
 
 const Dashboard = () => {
-  const [activeTab, setActiveTab] = useState('대시보드')
+  const [activeTab, setActiveTab] = useState("대시보드");
 
   const weeklyData = [
-    { day: '일요일', count: 18 },
-    { day: '월요일', count: 24 },
-    { day: '화요일', count: 7 },
-    { day: '수요일', count: 11 },
-    { day: '목요일', count: 17 },
-    { day: '금요일', count: 0 },
-    { day: '토요일', count: 3 },
-  ]
-  const maxCount = Math.max(...weeklyData.map(d => d.count))
+    { day: "일요일", count: 18 },
+    { day: "월요일", count: 24 },
+    { day: "화요일", count: 7 },
+    { day: "수요일", count: 11 },
+    { day: "목요일", count: 17 },
+    { day: "금요일", count: 0 },
+    { day: "토요일", count: 3 },
+  ];
+  const maxCount = Math.max(...weeklyData.map((d) => d.count));
 
-  const totalApplicants = 1592
-  const inProgress = 52
-  const accepted = 32
-  const rejected = 1238
+  const totalApplicants = 1592;
+  const inProgress = 52;
+  const accepted = 32;
+  const rejected = 1238;
   const acceptRate =
     totalApplicants > 0
       ? ((accepted / totalApplicants) * 100).toFixed(1)
-      : '0.0'
+      : "0.0";
   const rejectRate =
     totalApplicants > 0
       ? ((rejected / totalApplicants) * 100).toFixed(1)
-      : '0.0'
+      : "0.0";
 
   return (
     <div className="h-screen flex flex-col">
@@ -47,7 +47,7 @@ const Dashboard = () => {
             setActiveTab={setActiveTab}
           />
 
-          {activeTab === '대시보드' && (
+          {activeTab === "대시보드" && (
             <div className="p-6 flex flex-col space-y-6">
               {/* 검색·필터·정렬·칸반 설정 바 */}
               <section>
@@ -88,11 +88,11 @@ const Dashboard = () => {
 
                   {/* 바 차트 */}
                   <div className="mt-6 flex h-32 space-x-4">
-                    {weeklyData.map(item => {
+                    {weeklyData.map((item) => {
                       const heightPercent =
                         maxCount > 0
                           ? Math.round((item.count / maxCount) * 100)
-                          : 0
+                          : 0;
                       return (
                         <div
                           key={item.day}
@@ -104,7 +104,7 @@ const Dashboard = () => {
                                 className="bg-primary transition-all"
                                 style={{
                                   height: `${heightPercent}%`,
-                                  width: '8px',
+                                  width: "8px",
                                 }}
                               />
                             ) : (
@@ -118,14 +118,18 @@ const Dashboard = () => {
                             {item.count}명
                           </span>
                         </div>
-                      )
+                      );
                     })}
                   </div>
                 </div>
 
                 {/* ─── 오른쪽: 통계 카드 4개 ─── */}
                 <div className="col-span-1 flex flex-col space-y-6">
-                  <StatsCard title="총 지원자" value={totalApplicants} suffix="명" />
+                  <StatsCard
+                    title="총 지원자"
+                    value={totalApplicants}
+                    suffix="명"
+                  />
                   <StatsCard title="진행중" value={inProgress} suffix="명" />
                   <StatsCard
                     title="합격"
@@ -148,7 +152,7 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

@@ -17,7 +17,7 @@ const Candidates = () => {
     {
       id: 'received',
       title: '접수',
-      count: 17,
+      count: 2,
       showAddButton: true,
       items: [
         {
@@ -34,19 +34,12 @@ const Candidates = () => {
           time: '1일 전',
           tags: [],
         },
-        {
-          id: 3,
-          name: '이석진',
-          source: '원티드',
-          time: '1일 전',
-          tags: ['#해외 연수'],
-        },
       ],
     },
     {
       id: 'negotiation',
-      title: '처우 협의',
-      count: 4,
+      title: '처우 관리',
+      count: 3,
       showAddButton: false,
       items: [
         {
@@ -74,8 +67,8 @@ const Candidates = () => {
     },
     {
       id: 'offer',
-      title: '오퍼 레터',
-      count: 2,
+      title: '오퍼 관리',
+      count: 3,
       showAddButton: false,
       items: [
         {

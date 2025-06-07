@@ -3,14 +3,13 @@ import { NavLink } from 'react-router-dom'
 
 /**
  * Header 컴포넌트
- * - 콘텐츠 최상단: 채용명(타이틀) + 탭(대시보드, 지원서, 지원자 관리, 처우 관리, 오퍼 관리, 설정)
+ * - 콘텐츠 최상단: 채용명(타이틀) + 탭(대시보드, 지원자 관리, 처우 관리, 오퍼 관리, 설정)
  * - NavLink를 사용하여 클릭 시 실제 라우트가 변경되도록 구현
  */
 const Header = ({ title }) => {
   // 각 탭이 연결될 경로를 설정합니다.
   const tabs = [
     { label: '대시보드', path: '/dashboard' },
-    { label: '지원서', path: '/applications' },
     { label: '지원자 관리', path: '/candidates' },
     { label: '처우 관리', path: '/compensation' },
     { label: '오퍼 관리', path: '/offer' },

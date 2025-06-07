@@ -2,7 +2,6 @@
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Dashboard from '@/pages/Dashboard'
-import Applications from '@/pages/Applications'
 import Candidates from '@/pages/Candidates'
 import Compensation from '@/pages/Compensation'
 import Offer from '@/pages/Offer'
@@ -23,7 +22,6 @@ function App() {
 
          {/* 라우트 정의 */}
          <Route path="/dashboard" element={<Dashboard />} />
-         <Route path="/applications" element={<Applications />} />
          <Route path="/candidates" element={<Candidates />} />
          <Route path="/compensation" element={<Compensation />} />
          <Route path="/offer" element={<Offer />} />
