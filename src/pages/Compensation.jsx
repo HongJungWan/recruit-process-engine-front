@@ -103,7 +103,7 @@ const Compensation = () => {
             </button>
           </div>
 
-          {/* 기존 처우 카드 (미구현) */}
+          {/* 기존 처우 카드 */}
           <div className="p-6">
             <div className="space-y-4">
               <div className="border border-gray-200 rounded-lg p-4 bg-white">
@@ -134,7 +134,7 @@ const Compensation = () => {
                       : "text-indigo-300 text-sm font-medium"
                   }
                 >
-                  1.&nbsp;처우 산정 작성
+                  1.&nbsp;처우 산정
                 </span>
                 <span
                   className={
@@ -159,6 +159,11 @@ const Compensation = () => {
               </button>
             </div>
 
+            {/* Title & Template Selector */}
+            <div className="flex items-center justify-between px-6 py-4 border-b">
+              <h3 className="text-lg font-semibold">처우 산정 만들기</h3>
+            </div>
+
             {/* Modal Body */}
             <div className="flex flex-1 overflow-auto px-6 py-4 space-x-6">
               {step === 1 ? (
@@ -166,7 +171,7 @@ const Compensation = () => {
                   {/* STEP 1 카드 */}
                   <div className="w-1/3 bg-white border border-gray-200 rounded-lg shadow-sm p-6 space-y-4">
                     <h4 className="text-sm font-semibold">
-                      STEP 1 - 처우 입력
+                      STEP 1 - 처우 산정
                     </h4>
                     <div className="space-y-4">
                       <label className="block text-xs font-medium text-gray-700">
@@ -215,7 +220,7 @@ const Compensation = () => {
                   {/* STEP 2 카드 */}
                   <div className="w-2/3 bg-white border border-gray-200 rounded-lg shadow-sm p-6 flex flex-col space-y-4">
                     <h4 className="text-sm font-semibold">
-                      STEP 2 - 처우 협의 편집
+                      STEP 2 - 처우 협의
                     </h4>
 
                     {/* 이메일 메타 정보 */}
@@ -318,76 +323,99 @@ const Compensation = () => {
                   </div>
                 </>
               ) : (
-                <div className="flex-1 flex space-x-6">
-                  <div className="w-1/3 bg-white border border-gray-200 rounded-lg shadow-sm p-6">
-                    <h4 className="text-sm font-semibold mb-4">승인자 선택</h4>
-                    <ul className="space-y-2 overflow-auto max-h-[60vh]">
-                      {AVAILABLE_APPROVERS.filter(
-                        (a) => !selectedApprovers.find((sel) => sel.id === a.id)
-                      ).map((approver) => (
-                        <li
-                          key={approver.id}
-                          onClick={() => addApprover(approver)}
-                          className="cursor-pointer px-3 py-2 rounded hover:bg-gray-100 flex justify-between items-center"
-                        >
-                          <div>
-                            <p className="text-sm font-medium">
-                              {approver.name}
-                            </p>
-                            <p className="text-xs text-gray-500">
-                              {approver.email}
-                            </p>
-                          </div>
-                          <HiPlus className="text-gray-400" />
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="w-2/3 bg-white border border-gray-200 rounded-lg shadow-sm p-6 flex flex-col">
-                    <h4 className="text-sm font-semibold mb-4">
-                      승인 순서 확인
-                    </h4>
-                    <ul className="space-y-2 overflow-auto flex-1">
-                      {selectedApprovers.map((approver, idx) => (
-                        <li
-                          key={approver.id}
-                          className="flex items-center justify-between px-3 py-2 rounded hover:bg-gray-50"
-                        >
-                          <div>
-                            <p className="text-sm font-medium">
-                              {idx + 1}. {approver.name}
-                            </p>
-                            <p className="text-xs text-gray-500">
-                              {approver.email}
-                            </p>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            <button
-                              onClick={() => moveUp(idx)}
-                              disabled={idx === 0}
-                            >
-                              <HiChevronUp size={16} />
-                            </button>
-                            <button
-                              onClick={() => moveDown(idx)}
-                              disabled={idx === selectedApprovers.length - 1}
-                            >
-                              <HiChevronDown size={16} />
-                            </button>
-                            <button onClick={() => removeApprover(approver.id)}>
-                              <HiX size={16} className="text-red-500" />
-                            </button>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                    {selectedApprovers.length === 0 && (
-                      <p className="text-xs text-gray-400 text-center mt-4">
-                        오른쪽으로 추가 버튼을 눌러 승인자를 선택하세요.
+                <>
+                  {/* ───────── 카드 컨테이너 ───────── */}
+                  <div className="flex-1 flex space-x-6">
+                    {/* STEP 1 - 승인자 선택 */}
+                    <div className="w-1/2 bg-white border border-gray-200 rounded-lg shadow-sm p-6 flex flex-col">
+                      <h4 className="text-sm font-semibold mb-2">
+                        STEP 1 - 승인자 선택
+                      </h4>
+                      <p className="text-xs text-gray-500 mb-4">
+                        승인자를 선택하세요.
                       </p>
-                    )}
+                      <ul className="flex-1 overflow-auto space-y-2 max-h-[60vh]">
+                        {AVAILABLE_APPROVERS.filter(
+                          (a) =>
+                            !selectedApprovers.some((sel) => sel.id === a.id)
+                        ).map((approver) => (
+                          <li
+                            key={approver.id}
+                            onClick={() => addApprover(approver)}
+                            className="flex justify-between items-center px-3 py-2 rounded hover:bg-gray-50 cursor-pointer"
+                          >
+                            <div>
+                              <div className="flex items-center">
+                                <span className="text-sm font-medium">
+                                  {approver.name}
+                                </span>
+                                <span className="ml-2 px-2 py-0.5 text-xs bg-indigo-100 text-indigo-600 rounded">
+                                  부서장
+                                </span>
+                              </div>
+                              <p className="text-xs text-gray-400">
+                                {approver.email}
+                              </p>
+                            </div>
+                            <HiPlus className="text-gray-400" />
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* STEP 2 - 승인 순서 확인 */}
+                    <div className="w-1/2 bg-white border border-gray-200 rounded-lg shadow-sm p-6 flex flex-col">
+                      <h4 className="text-sm font-semibold mb-2">
+                        STEP 2 - 승인 순서 확인
+                      </h4>
+                      <p className="text-xs text-gray-500 mb-4">
+                        낮은 번호 순서대로 순차적으로 승인 진행되며, 마지막
+                        관리자 승인까지 완료되어야 결재가 완료됩니다.
+                      </p>
+                      <ul className="flex-1 overflow-auto space-y-2">
+                        {selectedApprovers.map((approver, idx) => (
+                          <li
+                            key={approver.id}
+                            className="flex items-center justify-between px-3 py-2 rounded hover:bg-gray-50"
+                          >
+                            <div className="flex items-center space-x-3">
+                              <span className="flex items-center justify-center w-6 h-6 text-xs text-gray-600 border rounded-full">
+                                {idx + 1}
+                              </span>
+                              <div>
+                                <span className="text-sm font-medium">
+                                  {approver.name}
+                                </span>
+                                <p className="text-xs text-gray-400">
+                                  {approver.email}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="flex items-center space-x-1">
+                              <button
+                                onClick={() => moveUp(idx)}
+                                disabled={idx === 0}
+                              >
+                                <HiChevronUp size={16} />
+                              </button>
+                              <button
+                                onClick={() => moveDown(idx)}
+                                disabled={idx === selectedApprovers.length - 1}
+                              >
+                                <HiChevronDown size={16} />
+                              </button>
+                              <button
+                                onClick={() => removeApprover(approver.id)}
+                              >
+                                <HiX size={16} className="text-red-500" />
+                              </button>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
 

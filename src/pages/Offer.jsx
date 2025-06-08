@@ -85,9 +85,6 @@ const Offer = () => {
             {/* Title & Template Selector */}
             <div className="flex items-center justify-between px-6 py-4 border-b">
               <h3 className="text-lg font-semibold">채용 오퍼 만들기</h3>
-              <button className="flex items-center text-sm text-gray-600 hover:text-gray-800">
-                채용 오퍼 템플릿 <HiChevronDown className="ml-1" />
-              </button>
             </div>
 
             {/* 모달 본문 */}
