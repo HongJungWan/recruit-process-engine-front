@@ -1,5 +1,4 @@
-// src/pages/Candidates.jsx
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "@/components/common/Sidebar";
 import Topbar from "@/components/common/Topbar";
 import Header from "@/components/common/Header";
@@ -10,89 +9,54 @@ import {
   HiRefresh,
   HiViewBoards,
   HiDownload,
+  HiChevronLeft,
+  HiChevronRight,
 } from "react-icons/hi";
 
 const Candidates = () => {
-  const columns = [
+  // 필터 탭 데이터
+  const filterTabs = [
+    { id: "all", label: "전체", count: 58 },
+    { id: "new", label: "신규 리드", count: 31 },
+    { id: "screening", label: "스크리닝", count: 17 },
+    { id: "proposal", label: "제안", count: 9 },
+    { id: "cover", label: "커버 전형", count: 5 },
+    { id: "offerPending", label: "내정 전", count: 3 },
+    { id: "completed", label: "지원 완료", count: 2 },
+  ];
+  const [activeTab, setActiveTab] = useState("all");
+
+  // 더미 테이블 데이터
+  const rows = [
     {
-      id: "received",
-      title: "접수",
-      count: 2,
-      showAddButton: true,
-      items: [
-        {
-          id: 1,
-          name: "김선우",
-          source: "채용 홈페이지",
-          time: "방금",
-          tags: ["#서류 평가"],
-        },
-        {
-          id: 2,
-          name: "김진수",
-          source: "잡코리아",
-          time: "1일 전",
-          tags: [],
-        },
+      id: 1,
+      name: "박진섭",
+      email: "p.spark@gmail.com",
+      recentContacts: [
+        { company: "(주)오아시스", step: "매니저 면접" },
+        { company: "(주)삼성전자", step: "인턴 면접" },
       ],
+      stage: "1차 인터뷰",
+      stageTime: "2일 전",
+      position: "백엔드 개발자",
     },
     {
-      id: "negotiation",
-      title: "처우 관리",
-      count: 3,
-      showAddButton: false,
-      items: [
-        {
-          id: 4,
-          name: "하늘이",
-          source: "채용 홈페이지",
-          time: "2일 전",
-          tags: ["#처우 협의 일정"],
-        },
-        {
-          id: 5,
-          name: "김신우",
-          source: "잡코리아",
-          time: "2일 전",
-          tags: ["#처우 협의 완료"],
-        },
-        {
-          id: 6,
-          name: "민윤기",
-          source: "채용 홈페이지",
-          time: "2023.11.08",
-          tags: [],
-        },
-      ],
+      id: 2,
+      name: "김민지",
+      email: "m.lee@gmail.com",
+      recentContacts: [{ company: "(주)카카오", step: "서류 합격" }],
+      stage: "서류합격",
+      stageTime: "1일 전",
+      position: "프론트엔드 개발자",
     },
     {
-      id: "offer",
-      title: "오퍼 관리",
-      count: 3,
-      showAddButton: false,
-      items: [
-        {
-          id: 7,
-          name: "박진섭",
-          source: "잡코리아",
-          time: "방금",
-          tags: [],
-        },
-        {
-          id: 8,
-          name: "김민지",
-          source: "채용 홈페이지",
-          time: "1일 전",
-          tags: ["#1차 거절"],
-        },
-        {
-          id: 9,
-          name: "정지원",
-          source: "사내 추천",
-          time: "2일 전",
-          tags: ["#2차 거절"],
-        },
-      ],
+      id: 3,
+      name: "정지원",
+      email: "j.jeong@gmail.com",
+      recentContacts: [],
+      stage: "지원 완료",
+      stageTime: "3일 전",
+      position: "풀스택 엔지니어",
     },
   ];
 
@@ -104,108 +68,135 @@ const Candidates = () => {
         <div className="flex-1 flex flex-col overflow-auto bg-neutral-100">
           <Header title="백엔드 개발자 채용" />
 
-          {/* 검색·필터·정렬·칸반 설정 바 */}
+          {/* 툴바 */}
           <div className="flex items-center flex-wrap gap-3 px-6 py-4 bg-white border-b border-gray-200">
-            {/* 검색 */}
             <div className="relative flex-1 max-w-md">
-              <HiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <HiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
                 placeholder="이름 또는 이메일, 연락처로 검색"
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500"
               />
             </div>
-
-            {/* 검색 */}
             <button className="flex items-center px-3 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
               <HiSearch className="mr-1" /> 검색
             </button>
-
-            {/* 필터 */}
-            <button className="flex items-center px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
+            <button className="flex items-center px-3 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
               <HiFilter className="mr-1" /> 필터
             </button>
-
-            {/* 정렬 */}
-            <button className="flex items-center px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
-              정렬: 최신순 <HiChevronDown className="ml-1" />
+            <button className="flex items-center px-3 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
+              정렬: 최신순 <HiChevronDown className="ml-1 h-4 w-4" />
             </button>
-
-            {/* 칸반 보기 설정 */}
-            <button className="flex items-center px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
-              <HiViewBoards className="mr-1" /> 칸반 보기 설정
-            </button>
-
-            {/* 우측 새로고침 / 내보내기 */}
             <div className="ml-auto flex items-center space-x-4">
               <button className="flex items-center text-gray-500 hover:text-gray-700">
-                <HiRefresh className="mr-1" />
-                방금 전 업데이트
-              </button>
-              <button className="p-2 text-gray-500 hover:text-gray-700">
-                <HiDownload />
+                <HiRefresh className="mr-1" /> 방금 전 업데이트
               </button>
             </div>
           </div>
 
-          {/* 칸반 보드 */}
-          <div className="p-6 flex-1 overflow-x-auto">
-            <div className="flex space-x-6 min-w-max">
-              {columns.map((col) => (
-                <div
-                  key={col.id}
-                  className="w-80 flex-shrink-0 bg-white rounded-lg shadow-sm flex flex-col"
+          {/* 필터 탭 */}
+          <div className="px-6 py-3 bg-white border-b border-gray-200">
+            <div className="flex space-x-4 overflow-x-auto">
+              {filterTabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex-shrink-0 px-3 py-1 text-sm font-medium rounded-full border transition-colors duration-150 ${
+                    activeTab === tab.id
+                      ? "bg-indigo-600 text-white border-indigo-600"
+                      : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+                  }`}
                 >
-                  {/* Header */}
-                  <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
-                    <h3 className="text-sm font-semibold text-gray-700">
-                      {col.title}
-                    </h3>
-                    <span className="text-xs font-medium text-gray-500">
-                      {col.count}
-                    </span>
-                  </div>
-
-                  {/* Body */}
-                  <div className="p-4 flex-1 overflow-y-auto space-y-4">
-                    {col.showAddButton && (
-                      <button
-                        type="button"
-                        className="w-full h-10 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-md text-gray-500 hover:bg-gray-50"
-                      >
-                        + 지원자 직접 추가
-                      </button>
-                    )}
-
-                    {col.items.map((item) => (
-                      <div
-                        key={item.id}
-                        className="bg-white border border-gray-200 rounded-md p-4 shadow-sm space-y-2"
-                      >
-                        <div className="text-sm font-medium text-gray-800">
-                          {item.name}
-                        </div>
-                        <div className="flex items-center justify-between text-xs text-gray-500">
-                          <span>{item.source}</span>
-                          <span>{item.time}</span>
-                        </div>
-                        {item.tags.length > 0 && (
-                          <div className="flex flex-wrap gap-1 text-xs">
-                            {item.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className="px-1.5 py-0.5 bg-gray-100 rounded"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                  {tab.label} {tab.count}
+                </button>
               ))}
+            </div>
+          </div>
+
+          {/* 데이터 테이블 */}
+          <div className="p-6 flex-1 overflow-auto flex flex-col">
+            <table className="min-w-full bg-white border border-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-4 py-3 border-b text-center w-12">
+                    <input type="checkbox" />
+                  </th>
+                  <th className="px-4 py-3 border-b text-left text-sm font-semibold text-gray-700 cursor-pointer">
+                    이름 / 이메일 <HiChevronDown className="inline h-4 w-4" />
+                  </th>
+                  <th className="px-4 py-3 border-b text-left text-sm font-semibold text-gray-700 cursor-pointer">
+                    최근 연락 <HiChevronDown className="inline h-4 w-4" />
+                  </th>
+                  <th className="px-4 py-3 border-b text-left text-sm font-semibold text-gray-700 cursor-pointer">
+                    단계 <HiChevronDown className="inline h-4 w-4" />
+                  </th>
+                  <th className="px-4 py-3 border-b text-left text-sm font-semibold text-gray-700 cursor-pointer">
+                    최근 연락 경과 <HiChevronDown className="inline h-4 w-4" />
+                  </th>
+                  <th className="px-4 py-3 border-b text-left text-sm font-semibold text-gray-700 cursor-pointer">
+                    지원 포지션 <HiChevronDown className="inline h-4 w-4" />
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row) => (
+                  <tr key={row.id} className="hover:bg-gray-50">
+                    <td className="px-4 py-3 border-b text-center">
+                      <input type="checkbox" />
+                    </td>
+                    <td className="px-4 py-3 border-b">
+                      <div className="text-sm font-medium text-gray-800">
+                        {row.name}
+                      </div>
+                      <div className="text-xs text-gray-500">{row.email}</div>
+                    </td>
+                    <td className="px-4 py-3 border-b align-top">
+                      {row.recentContacts.length > 0 ? (
+                        row.recentContacts.map((c, i) => (
+                          <div
+                            key={i}
+                            className="flex justify-between text-xs mb-1"
+                          >
+                            <span className="text-gray-800">
+                              {c.company} {c.step}
+                            </span>
+                          </div>
+                        ))
+                      ) : (
+                        <span className="text-xs text-gray-400">-</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3 border-b text-sm text-gray-700">
+                      {row.stage}
+                    </td>
+                    <td className="px-4 py-3 border-b text-sm text-gray-700">
+                      {row.stageTime}
+                    </td>
+                    <td className="px-4 py-3 border-b text-sm text-gray-700">
+                      {row.position}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {/* 페이지네이션 */}
+            <div className="flex justify-center items-center space-x-2 mt-6">
+              <button className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100">
+                <HiChevronLeft className="h-5 w-5 text-gray-600" />
+              </button>
+              <button className="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center">
+                1
+              </button>
+              <button className="w-8 h-8 rounded-full text-gray-600 hover:bg-gray-100 flex items-center justify-center">
+                2
+              </button>
+              <button className="w-8 h-8 rounded-full text-gray-600 hover:bg-gray-100 flex items-center justify-center">
+                3
+              </button>
+              <button className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100">
+                <HiChevronRight className="h-5 w-5 text-gray-600" />
+              </button>
             </div>
           </div>
         </div>
