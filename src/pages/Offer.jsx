@@ -1,11 +1,11 @@
-// src/pages/Settings.jsx
+// src/pages/Offer.jsx
 import React, { useState } from "react";
 import { HiPlus, HiX, HiSearch, HiFilter, HiChevronDown } from "react-icons/hi";
 import Sidebar from "@/components/common/Sidebar";
 import Topbar from "@/components/common/Topbar";
 import Header from "@/components/common/Header";
 
-const Settings = () => {
+const Offer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -27,6 +27,9 @@ const Settings = () => {
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500"
                 />
               </div>
+              <button className="flex items-center px-3 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
+                <HiSearch className="mr-1" /> 검색
+              </button>
               <button className="flex items-center px-3 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
                 <HiFilter className="mr-1" /> 필터
               </button>
@@ -51,7 +54,7 @@ const Settings = () => {
                 </p>
                 <div className="mt-2 flex items-center text-xs text-gray-500 space-x-4">
                   <span>생성 2024.05.05</span>
-                  <span className="text-green-600">승인 대기중 (2/5)</span>
+                  <span className="text-green-600">사인 대기중</span>
                 </div>
               </div>
             </div>
@@ -261,4 +264,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default Offer;

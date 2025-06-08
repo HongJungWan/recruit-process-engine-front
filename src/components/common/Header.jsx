@@ -1,20 +1,19 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React from "react";
+import { NavLink } from "react-router-dom";
 
 /**
  * Header 컴포넌트
- * - 콘텐츠 최상단: 채용명(타이틀) + 탭(대시보드, 지원자 관리, 처우 관리, 오퍼 관리, 설정)
+ * - 콘텐츠 최상단: 채용명(타이틀) + 탭(대시보드, 지원자 관리, 처우 관리, 오퍼 관리)
  * - NavLink를 사용하여 클릭 시 실제 라우트가 변경되도록 구현
  */
 const Header = ({ title }) => {
   // 각 탭이 연결될 경로를 설정합니다.
   const tabs = [
-    { label: '대시보드', path: '/dashboard' },
-    { label: '지원자 관리', path: '/candidates' },
-    { label: '처우 관리', path: '/compensation' },
-    { label: '오퍼 관리', path: '/offer' },
-    { label: '설정', path: '/settings' },
-  ]
+    { label: "대시보드", path: "/dashboard" },
+    { label: "지원자 관리", path: "/candidates" },
+    { label: "처우 관리", path: "/compensation" },
+    { label: "오퍼 관리", path: "/offer" },
+  ];
 
   return (
     <div className="bg-white px-6 py-4 border-b border-neutral-200 flex items-center">
@@ -33,8 +32,8 @@ const Header = ({ title }) => {
                 className={({ isActive }) =>
                   `text-sm font-sans font-medium pb-2 ${
                     isActive
-                      ? 'text-primary border-b-2 border-primary'
-                      : 'text-neutral-500 hover:text-neutral-700'
+                      ? "text-primary border-b-2 border-primary"
+                      : "text-neutral-500 hover:text-neutral-700"
                   }`
                 }
               >
@@ -45,7 +44,7 @@ const Header = ({ title }) => {
         </ul>
       </nav>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

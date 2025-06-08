@@ -1,8 +1,8 @@
 // src/pages/Candidates.jsx
-import React from 'react'
-import Sidebar from '@/components/common/Sidebar'
-import Topbar from '@/components/common/Topbar'
-import Header from '@/components/common/Header'
+import React from "react";
+import Sidebar from "@/components/common/Sidebar";
+import Topbar from "@/components/common/Topbar";
+import Header from "@/components/common/Header";
 import {
   HiSearch,
   HiFilter,
@@ -10,91 +10,91 @@ import {
   HiRefresh,
   HiViewBoards,
   HiDownload,
-} from 'react-icons/hi'
+} from "react-icons/hi";
 
 const Candidates = () => {
   const columns = [
     {
-      id: 'received',
-      title: '접수',
+      id: "received",
+      title: "접수",
       count: 2,
       showAddButton: true,
       items: [
         {
           id: 1,
-          name: '김선우',
-          source: '채용 홈페이지',
-          time: '방금',
-          tags: ['#서류 평가'],
+          name: "김선우",
+          source: "채용 홈페이지",
+          time: "방금",
+          tags: ["#서류 평가"],
         },
         {
           id: 2,
-          name: '김진수',
-          source: '잡코리아',
-          time: '1일 전',
+          name: "김진수",
+          source: "잡코리아",
+          time: "1일 전",
           tags: [],
         },
       ],
     },
     {
-      id: 'negotiation',
-      title: '처우 관리',
+      id: "negotiation",
+      title: "처우 관리",
       count: 3,
       showAddButton: false,
       items: [
         {
           id: 4,
-          name: '하늘이',
-          source: '채용 홈페이지',
-          time: '2일 전',
-          tags: ['#처우 협의 일정'],
+          name: "하늘이",
+          source: "채용 홈페이지",
+          time: "2일 전",
+          tags: ["#처우 협의 일정"],
         },
         {
           id: 5,
-          name: '김신우',
-          source: '잡코리아',
-          time: '2일 전',
-          tags: ['#처우 협의 완료'],
+          name: "김신우",
+          source: "잡코리아",
+          time: "2일 전",
+          tags: ["#처우 협의 완료"],
         },
         {
           id: 6,
-          name: '민윤기',
-          source: '채용 홈페이지',
-          time: '2023.11.08',
+          name: "민윤기",
+          source: "채용 홈페이지",
+          time: "2023.11.08",
           tags: [],
         },
       ],
     },
     {
-      id: 'offer',
-      title: '오퍼 관리',
+      id: "offer",
+      title: "오퍼 관리",
       count: 3,
       showAddButton: false,
       items: [
         {
           id: 7,
-          name: '박진섭',
-          source: '잡코리아',
-          time: '방금',
+          name: "박진섭",
+          source: "잡코리아",
+          time: "방금",
           tags: [],
         },
         {
           id: 8,
-          name: '김민지',
-          source: '채용 홈페이지',
-          time: '1일 전',
-          tags: ['#1차 거절'],
+          name: "김민지",
+          source: "채용 홈페이지",
+          time: "1일 전",
+          tags: ["#1차 거절"],
         },
         {
           id: 9,
-          name: '정지원',
-          source: '사내 추천',
-          time: '2일 전',
-          tags: ['#2차 거절'],
+          name: "정지원",
+          source: "사내 추천",
+          time: "2일 전",
+          tags: ["#2차 거절"],
         },
       ],
     },
-  ]
+  ];
 
   return (
     <div className="h-screen flex flex-col">
@@ -115,6 +115,11 @@ const Candidates = () => {
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500"
               />
             </div>
+
+            {/* 검색 */}
+            <button className="flex items-center px-3 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
+              <HiSearch className="mr-1" /> 검색
+            </button>
 
             {/* 필터 */}
             <button className="flex items-center px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50">
@@ -146,7 +151,7 @@ const Candidates = () => {
           {/* 칸반 보드 */}
           <div className="p-6 flex-1 overflow-x-auto">
             <div className="flex space-x-6 min-w-max">
-              {columns.map(col => (
+              {columns.map((col) => (
                 <div
                   key={col.id}
                   className="w-80 flex-shrink-0 bg-white rounded-lg shadow-sm flex flex-col"
@@ -172,7 +177,7 @@ const Candidates = () => {
                       </button>
                     )}
 
-                    {col.items.map(item => (
+                    {col.items.map((item) => (
                       <div
                         key={item.id}
                         className="bg-white border border-gray-200 rounded-md p-4 shadow-sm space-y-2"
@@ -186,7 +191,7 @@ const Candidates = () => {
                         </div>
                         {item.tags.length > 0 && (
                           <div className="flex flex-wrap gap-1 text-xs">
-                            {item.tags.map(tag => (
+                            {item.tags.map((tag) => (
                               <span
                                 key={tag}
                                 className="px-1.5 py-0.5 bg-gray-100 rounded"
@@ -206,7 +211,7 @@ const Candidates = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Candidates
+export default Candidates;
