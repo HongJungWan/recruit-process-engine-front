@@ -5,7 +5,6 @@ const recruitList = [
   "UI/UX 디자이너 채용",
   "백엔드 개발자 채용",
   "프론트엔드 개발자 채용",
-  "운영팀 QA/DevOps",
   "UX 리서처 채용",
 ];
 

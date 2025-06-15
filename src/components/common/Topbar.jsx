@@ -4,11 +4,11 @@ import React from "react";
  * Topbar 컴포넌트
  * - 화면 최상단 글로벌 네비게이션 바
  * - 왼쪽: “Recruit Peocess Engine” (드롭다운 표시)
- * - 중앙: 채용 관리, 인재풀, 템플릿, 멤버 메뉴
+ * - 중앙: 채용 관리, 템플릿, 멤버 메뉴
  * - 오른쪽: 아이콘(헤드폰, 물음표, 알림) + 사용자 아바타+이름
  */
 const Topbar = () => {
-  const navItems = ["채용 관리", "인재풀", "템플릿", "멤버"];
+  const navItems = ["채용 관리", "템플릿", "멤버"];
 
   return (
     <div className="flex items-center justify-between bg-white px-6 py-2 border-b border-neutral-200">
