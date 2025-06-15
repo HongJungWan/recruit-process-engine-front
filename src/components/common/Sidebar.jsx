@@ -1,16 +1,13 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React from "react";
+import { NavLink } from "react-router-dom";
 
 const recruitList = [
-  'UI/UX 디자이너 채용',
-  '백엔드 개발자 채용',
-  '프론트엔드 개발자 채용',
-  '운영팀 QA/DevOps',
-  '수석 데이터 엔지니어 채용',
-  '건설 공무팀 신입 채용',
-  'SRE팀 채용',
-  'UX리서처 채용',
-]
+  "UI/UX 디자이너 채용",
+  "백엔드 개발자 채용",
+  "프론트엔드 개발자 채용",
+  "운영팀 QA/DevOps",
+  "UX 리서처 채용",
+];
 
 /**
  * Sidebar 컴포넌트
@@ -45,7 +42,7 @@ const Sidebar = () => {
         </ul>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

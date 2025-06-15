@@ -7,8 +7,6 @@ import {
   HiFilter,
   HiChevronDown,
   HiRefresh,
-  HiViewBoards,
-  HiDownload,
   HiChevronLeft,
   HiChevronRight,
 } from "react-icons/hi";
@@ -16,13 +14,13 @@ import {
 const Candidates = () => {
   // 필터 탭 데이터
   const filterTabs = [
-    { id: "all", label: "전체", count: 58 },
-    { id: "new", label: "신규 리드", count: 31 },
-    { id: "screening", label: "스크리닝", count: 17 },
-    { id: "proposal", label: "제안", count: 9 },
-    { id: "cover", label: "커버 전형", count: 5 },
-    { id: "offerPending", label: "내정 전", count: 3 },
-    { id: "completed", label: "지원 완료", count: 2 },
+    { id: "all", label: "#전체", count: 58 },
+    { id: "applied", label: "#지원 완료", count: 31 },
+    { id: "reviewCompleted", label: "#검토 완료", count: 17 },
+    { id: "screeningCompleted", label: "#스크리닝 완료", count: 9 },
+    { id: "techInterviewCompleted", label: "#기술 면접 완료", count: 5 },
+    { id: "compensationCompleted", label: "#처우 완료", count: 3 },
+    { id: "offerCompleted", label: "#오퍼 완료", count: 2 },
   ];
   const [activeTab, setActiveTab] = useState("all");
 
@@ -32,31 +30,34 @@ const Candidates = () => {
       id: 1,
       name: "박진섭",
       email: "p.spark@gmail.com",
-      recentContacts: [
-        { company: "(주)오아시스", step: "매니저 면접" },
-        { company: "(주)삼성전자", step: "인턴 면접" },
-      ],
-      stage: "1차 인터뷰",
-      stageTime: "2일 전",
-      position: "백엔드 개발자",
+      position: "백엔드 개발자 채용",
+      status: "1차 인터뷰",
+      hrManager: "홍정완", // 인사담당자
+      source: "원티드", // 지원 경로
+      appliedDate: "2일 전", // 지원일
+      tags: ["#오퍼 완료"], // 태그
     },
     {
       id: 2,
       name: "김민지",
       email: "m.lee@gmail.com",
-      recentContacts: [{ company: "(주)카카오", step: "서류 합격" }],
-      stage: "서류합격",
-      stageTime: "1일 전",
-      position: "프론트엔드 개발자",
+      position: "프론트엔드 개발자 채용",
+      status: "서류합격",
+      hrManager: "트럼프",
+      source: "원티드",
+      appliedDate: "1일 전",
+      tags: ["#검토 완료"],
     },
     {
       id: 3,
       name: "정지원",
       email: "j.jeong@gmail.com",
-      recentContacts: [],
-      stage: "지원 완료",
-      stageTime: "3일 전",
-      position: "풀스택 엔지니어",
+      position: "UX 리서치 채용",
+      status: "지원 완료",
+      hrManager: "일론머스크",
+      source: "사람인",
+      appliedDate: "3일 전",
+      tags: ["#지원 완료"],
     },
   ];
 
@@ -125,16 +126,22 @@ const Candidates = () => {
                     이름 / 이메일 <HiChevronDown className="inline h-4 w-4" />
                   </th>
                   <th className="px-4 py-3 border-b text-left text-sm font-semibold text-gray-700 cursor-pointer">
-                    최근 연락 <HiChevronDown className="inline h-4 w-4" />
-                  </th>
-                  <th className="px-4 py-3 border-b text-left text-sm font-semibold text-gray-700 cursor-pointer">
-                    단계 <HiChevronDown className="inline h-4 w-4" />
-                  </th>
-                  <th className="px-4 py-3 border-b text-left text-sm font-semibold text-gray-700 cursor-pointer">
-                    최근 연락 경과 <HiChevronDown className="inline h-4 w-4" />
-                  </th>
-                  <th className="px-4 py-3 border-b text-left text-sm font-semibold text-gray-700 cursor-pointer">
                     지원 포지션 <HiChevronDown className="inline h-4 w-4" />
+                  </th>
+                  <th className="px-4 py-3 border-b text-left text-sm font-semibold text-gray-700 cursor-pointer">
+                    지원자 상태 <HiChevronDown className="inline h-4 w-4" />
+                  </th>
+                  <th className="px-4 py-3 border-b text-left text-sm font-semibold text-gray-700 cursor-pointer">
+                    인사담당자 <HiChevronDown className="inline h-4 w-4" />
+                  </th>
+                  <th className="px-4 py-3 border-b text-left text-sm font-semibold text-gray-700 cursor-pointer">
+                    지원 경로 <HiChevronDown className="inline h-4 w-4" />
+                  </th>
+                  <th className="px-4 py-3 border-b text-left text-sm font-semibold text-gray-700 cursor-pointer">
+                    지원일 <HiChevronDown className="inline h-4 w-4" />
+                  </th>
+                  <th className="px-4 py-3 border-b text-left text-sm font-semibold text-gray-700 cursor-pointer">
+                    태그 <HiChevronDown className="inline h-4 w-4" />
                   </th>
                 </tr>
               </thead>
@@ -150,30 +157,34 @@ const Candidates = () => {
                       </div>
                       <div className="text-xs text-gray-500">{row.email}</div>
                     </td>
-                    <td className="px-4 py-3 border-b align-top">
-                      {row.recentContacts.length > 0 ? (
-                        row.recentContacts.map((c, i) => (
-                          <div
-                            key={i}
-                            className="flex justify-between text-xs mb-1"
+                    <td className="px-4 py-3 border-b text-sm text-gray-700">
+                      {row.position}
+                    </td>
+                    <td className="px-4 py-3 border-b text-sm text-gray-700">
+                      {row.status}
+                    </td>
+                    <td className="px-4 py-3 border-b text-sm text-gray-700">
+                      {row.hrManager}
+                    </td>
+                    <td className="px-4 py-3 border-b text-sm text-gray-700">
+                      {row.source}
+                    </td>
+                    <td className="px-4 py-3 border-b text-sm text-gray-700">
+                      {row.appliedDate}
+                    </td>
+                    <td className="px-4 py-3 border-b">
+                      {row.tags.length > 0 ? (
+                        row.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="inline-flex items-center px-2 py-0.5 mr-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800"
                           >
-                            <span className="text-gray-800">
-                              {c.company} {c.step}
-                            </span>
-                          </div>
+                            {tag}
+                          </span>
                         ))
                       ) : (
                         <span className="text-xs text-gray-400">-</span>
                       )}
-                    </td>
-                    <td className="px-4 py-3 border-b text-sm text-gray-700">
-                      {row.stage}
-                    </td>
-                    <td className="px-4 py-3 border-b text-sm text-gray-700">
-                      {row.stageTime}
-                    </td>
-                    <td className="px-4 py-3 border-b text-sm text-gray-700">
-                      {row.position}
                     </td>
                   </tr>
                 ))}
@@ -191,7 +202,7 @@ const Candidates = () => {
               <button className="w-8 h-8 rounded-full text-gray-600 hover:bg-gray-100 flex items-center justify-center">
                 2
               </button>
-              <button className="w-8 h-8 rounded-full text-gray-600 hover:bg-gray-100 flex items-center justify-center">
+              <button className="w-8 h-8 rounded-full text-gray-600 hover/bg-gray-100 flex items-center justify-center">
                 3
               </button>
               <button className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100">
