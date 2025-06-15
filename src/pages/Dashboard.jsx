@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "chartjs-adapter-date-fns"; // 날짜 축 어댑터
 import { HiSearch } from "react-icons/hi";
 import Sidebar from "@/components/common/Sidebar";
 import Topbar from "@/components/common/Topbar";
@@ -6,45 +7,76 @@ import Header from "@/components/common/Header";
 import StatsCard from "@/components/common/StatsCard";
 import { Line, Doughnut } from "react-chartjs-2";
 import "chart.js/auto";
+import {
+  Chart as ChartJS,
+  TimeScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+// TimeScale 등 차트 스케일 등록
+ChartJS.register(
+  TimeScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend
+);
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("대시보드");
 
   // 1) 지원자 유입 추이(Line Chart)
   const lineData = {
-    labels: ["2024.04.01-2024.04.31", "2024.05.01-2024.05.31"],
+    labels: ["2024-04-03", "2024-05-01", "2024-06-01", "2024-06-30"], // 적용 기간: 4/3~6/30
     datasets: [
       {
         label: "총 지원자 수",
-        data: [208, 211],
+        data: [208, 225, 198, 211],
         borderColor: "#2E4BF7",
         backgroundColor: "rgba(79, 70, 229, 0.1)",
         tension: 0.4,
       },
       {
         label: "불합격 지원자 수",
-        data: [34, 31],
+        data: [34, 42, 29, 31],
         borderColor: "#F85A47",
         backgroundColor: "rgba(248, 90, 71, 0.1)",
         tension: 0.4,
       },
       {
         label: "합격 지원자 수",
-        data: [18, 21],
+        data: [18, 30, 16, 21],
         borderColor: "#3AC47D",
         backgroundColor: "rgba(58, 196, 125, 0.1)",
         tension: 0.4,
       },
     ],
   };
+
   const lineOptions = {
     maintainAspectRatio: false,
     plugins: { legend: { display: false } },
     scales: {
-      x: { grid: { display: false }, ticks: { color: "#9CA3AF" } },
+      x: {
+        type: "time", // 시간 축
+        time: {
+          parser: "yyyy-MM-dd",
+          unit: "month",
+          tooltipFormat: "yyyy-MM-dd",
+        },
+        grid: { display: false },
+        ticks: { color: "#9CA3AF" },
+      },
       y: {
+        beginAtZero: false, // 0부터 시작하지 않음
+        suggestedMin: 200, // Y축 범위 좁혀 기울기 강조
         grid: { borderDash: [4, 4], color: "#E5E7EB" },
-        ticks: { display: false },
+        ticks: { color: "#9CA3AF" },
       },
     },
   };
