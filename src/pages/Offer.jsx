@@ -248,7 +248,7 @@ const Offer = () => {
                 onClick={() => setIsModalOpen(false)}
                 className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800"
               >
-                미리보기
+                취소
               </button>
               <button className="px-4 py-2 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700">
                 오퍼 발송
